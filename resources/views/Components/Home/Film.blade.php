@@ -7,7 +7,7 @@
         flex-direction: column;
         justify-content: center;
         color: #fff;
-        padding: 2rem 0;
+        padding-top: 4rem;
     }
 
     .section-title {
@@ -28,7 +28,7 @@
         display: flex;
         overflow-x: auto;
         overflow-y: hidden;
-        padding: 3rem 1rem;
+        padding: 0 1rem;
         gap: 2rem;
         max-height: 850px;
         -ms-overflow-style: none;
@@ -243,7 +243,7 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid my-5">
+        <div class="container-fluid mt-5">
             <div class="poster-scroll-container">
 
                 @foreach ($film as $item)
