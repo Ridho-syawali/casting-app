@@ -53,6 +53,10 @@
 
     .news-content {
         padding-inline: 0.6rem;
+        padding-block: 6rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
     }
 
     .filter-sheet-container {
@@ -511,7 +515,7 @@
                     </div>
                 </div>
 
-                <div class="news-content py-5">
+                <div class="news-content">
                     <div class="container-fluid">
                         <div class="row align-items-center px-3 px-md-4 mb-4">
                             <div class="col-lg-2 col-md-3 mb-3 mb-md-0">
