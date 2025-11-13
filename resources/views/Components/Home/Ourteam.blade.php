@@ -1,3 +1,6 @@
+@props(['team'])
+
+
 <style>
     .scrollable-cards-container {
         display: flex;
@@ -193,97 +196,19 @@
         <div class="container-fluid">
             <div class="scrollable-cards-container">
 
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop"
-                            alt="Direktur Casting">
-                        <div class="card-overlay">
-                            <h5>Direktur Casting</h5>
-                            <p>Pengalaman luas dalam memilih bakat untuk berbagai produksi film internasional dan
-                                nasional.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
+                @foreach ($team as $data)
+                    <div class="card-col">
+                        <div class="team-card">
+                            <img src="{{ $data['image'] }}" alt="{{ $data['nama'] }}">
+                            <div class="card-overlay">
+                                <h5 class="border-bottom">{{ $data['nama'] }}</h5>
+                                <p>{{ $data['pengenalan_singkat'] }}</p>
+                                <a href="#" class="btn-read-more">Read More <i
+                                        class="fas fa-arrow-right ms-1"></i></a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=600&fit=crop"
-                            alt="Asisten Produksi">
-                        <div class="card-overlay">
-                            <h5>Asisten Produksi</h5>
-                            <p>Mengurus logistik dan jadwal audisi dengan efisien serta koordinasi tim produksi.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=600&fit=crop"
-                            alt="Spesialis Bakat">
-                        <div class="card-overlay">
-                            <h5>Spesialis Bakat</h5>
-                            <p>Mencari dan mengembangkan aktor/aktris baru potensial di seluruh Indonesia.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=400&h=600&fit=crop"
-                            alt="Humas">
-                        <div class="card-overlay">
-                            <h5>Humas</h5>
-                            <p>Menjaga relasi baik dengan klien dan media untuk mengembangkan jaringan bisnis.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&h=600&fit=crop"
-                            alt="Admin">
-                        <div class="card-overlay">
-                            <h5>Admin</h5>
-                            <p>Bertanggung jawab atas data dan dokumentasi casting serta administrasi harian.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=600&fit=crop"
-                            alt="Koordinator">
-                        <div class="card-overlay">
-                            <h5>Koordinator</h5>
-                            <p>Mengkoordinasikan seluruh kegiatan casting dan memastikan semua berjalan lancar.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card-col">
-                    <div class="team-card">
-                        <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&h=600&fit=crop"
-                            alt="Staf Pendukung">
-                        <div class="card-overlay">
-                            <h5>Staf Pendukung</h5>
-                            <p>Mendukung operasional harian tim casting dengan dedikasi dan profesionalisme tinggi.</p>
-                            <a href="#" class="btn-read-more">Read More <i
-                                    class="fas fa-arrow-right ms-1"></i></a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
 
             </div>
         </div>

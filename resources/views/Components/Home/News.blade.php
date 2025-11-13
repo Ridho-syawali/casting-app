@@ -1,3 +1,5 @@
+@props(['news'])
+
 <style>
     .news-header {
         min-height: 250px;
@@ -367,6 +369,11 @@
     </div>
 </div>
 
+@php
+    $mainNews = $news[0] ?? null;
+    $otherNews = array_slice($news, 1);
+@endphp
+
 <div class="container-fluid p-0">
     <div class="news-header">
         <div class="container-fluid">
@@ -394,112 +401,50 @@
         <div class="container-fluid">
             <div class="news-container">
                 <div class="row">
-                    <div class="col-lg-7 mb-4 mb-lg-0">
-                        <div class="main-news-card">
-                            <img src="https://images.unsplash.com/photo-1594908900066-3f47337549d8?w=800&h=1000&fit=crop"
-                                alt="Main News">
-                            <div class="main-news-overlay">
-                                <h3 class="main-news-title">Petualangan Sherina 2: Kembalinya Legenda</h3>
-                                <div class="main-news-meta">
-                                    <div class="meta-item">
-                                        <i class="far fa-calendar"></i>
-                                        <span>12 Nov 2024</span>
+                    {{-- Berita utama --}}
+                    @if ($mainNews)
+                        <div class="col-lg-7 mb-4 mb-lg-0">
+                            <div class="main-news-card">
+                                <img src="{{ $mainNews['image'] }}" alt="{{ $mainNews['title'] }}">
+                                <div class="main-news-overlay">
+                                    <h3 class="main-news-title">{{ $mainNews['title'] }}</h3>
+                                    <div class="main-news-meta">
+                                        <div class="meta-item">
+                                            <i class="far fa-calendar"></i>
+                                            <span>{{ \Carbon\Carbon::parse($mainNews['created_at'])->format('d M Y') }}</span>
+                                        </div>
+                                        <div class="meta-item">
+                                            <i class="far fa-user"></i>
+                                            <span>{{ $mainNews['author'] ?? 'Admin ACI' }}</span>
+                                        </div>
                                     </div>
-                                    <div class="meta-item">
-                                        <i class="far fa-user"></i>
-                                        <span>Admin ACI</span>
-                                    </div>
+                                    @if (isset($mainNews['description']))
+                                        <p class="main-news-description">{{ $mainNews['description'] }}</p>
+                                    @endif
                                 </div>
-                                <p class="main-news-description ">
-                                    Sherina kembali dalam petualangan seru yang penuh dengan musik, persahabatan, dan
-                                    tantangan yang menguji keberanian. Film ini menghadirkan nostalgia sekaligus cerita
-                                    baru yang fresh untuk semua generasi.
-                                </p>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
+                    {{-- Berita lainnya --}}
                     <div class="col-lg-5">
                         <div class="small-news-grid">
                             <div class="row g-3">
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1?w=600&h=600&fit=crop"
-                                            alt="News 1">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Festival Film Indonesia 2024 Siap Digelar</h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 10 Nov</span>
+                                @foreach ($otherNews as $item)
+                                    <div class="col-md-6 col-12">
+                                        <div class="small-news-card">
+                                            <img src="{{ $item['image'] }}" alt="{{ $item['title'] }}">
+                                            <div class="small-news-overlay">
+                                                <h5 class="small-news-title">{{ $item['title'] }}</h5>
+                                                <div class="small-news-meta">
+                                                    <span><i class="far fa-calendar"></i>
+                                                        {{ \Carbon\Carbon::parse($item['created_at'])->format('d M') }}
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=600&h=600&fit=crop"
-                                            alt="News 2">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Nominasi Piala Citra 2024 Diumumkan</h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 09 Nov</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1574267432644-f610dd5ac8b0?w=600&h=600&fit=crop"
-                                            alt="News 3">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Kolaborasi ACI dengan Sineas Muda Indonesia
-                                            </h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 08 Nov</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=600&h=600&fit=crop"
-                                            alt="News 4">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Workshop Produksi Film untuk Pemula</h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 07 Nov</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&h=600&fit=crop"
-                                            alt="News 5">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Peningkatan Produksi Film Lokal 2024</h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 06 Nov</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 col-12">
-                                    <div class="small-news-card">
-                                        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?w=600&h=600&fit=crop"
-                                            alt="News 6">
-                                        <div class="small-news-overlay">
-                                            <h5 class="small-news-title">Kebijakan Baru Perfilman Indonesia</h5>
-                                            <div class="small-news-meta">
-                                                <span><i class="far fa-calendar"></i> 05 Nov</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -508,6 +453,7 @@
         </div>
     </div>
 </div>
+
 
 <script>
     function toggleFilter() {
