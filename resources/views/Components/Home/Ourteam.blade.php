@@ -1,6 +1,5 @@
 @props(['team'])
 
-
 <style>
     .scrollable-cards-container {
         display: flex;
@@ -31,15 +30,22 @@
         transition: transform 0.3s ease;
     }
 
+    .team-card-image-wrapper {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+
     .team-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
         transition: transform 0.5s ease;
+        display: block;
     }
 
-    .team-card:hover img {
+    .team-card:hover .team-card-image-wrapper img {
         transform: scale(1.1);
     }
 
@@ -50,12 +56,26 @@
         right: 0;
         background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.7) 70%, transparent 100%);
         padding: 2rem 1.5rem 1.5rem;
-        transform: translateY(100%);
-        transition: transform 0.4s ease;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
     }
 
     .team-card:hover .card-overlay {
+        opacity: 1;
         transform: translateY(0);
+        pointer-events: auto;
+    }
+
+    .team-card.modal-open:hover .team-card-image-wrapper img {
+        transform: scale(1) !important;
+    }
+
+    .team-card.modal-open:hover .card-overlay {
+        opacity: 0 !important;
+        transform: translateY(20px) !important;
+        pointer-events: none !important;
     }
 
     .card-overlay h5 {
@@ -128,7 +148,133 @@
         transform: rotate(180deg);
     }
 
+    .modal-xl-custom {
+        max-width: 1200px;
+    }
+
+    .modal-body-custom {
+        padding: 0;
+        max-height: 85vh;
+        overflow-y: auto;
+    }
+
+    .modal-left-image {
+        height: 100%;
+        min-height: 600px;
+        object-fit: cover;
+        object-position: center;
+    }
+
+    .modal-right-content {
+        padding: 2.5rem;
+    }
+
+    .modal-member-name {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #333;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid #dee2e6;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-description {
+        font-size: 1rem;
+        color: #666;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+
+    .portfolio-scroll-container {
+        display: flex;
+        overflow-x: auto;
+        gap: 1rem;
+        padding: 1rem 0;
+        margin-bottom: 2rem;
+        -ms-overflow-style: none;
+        scrollbar-width: thin;
+        border-bottom: 2px solid #252525;
+    }
+
+    .portfolio-scroll-container::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .portfolio-scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .portfolio-scroll-container::-webkit-scrollbar-thumb {
+        background: #c40506;
+        border-radius: 10px;
+    }
+
+    .portfolio-card {
+        flex: 0 0 200px;
+        min-width: 200px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .portfolio-card img {
+        width: 100%;
+        height: 280px;
+        object-fit: cover;
+    }
+
+    .portfolio-card-title {
+        padding: 0.75rem;
+        background: white;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-align: center;
+        color: #333;
+    }
+
+    .completed-projects-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .completed-projects-list li {
+        padding: 0.75rem 1rem;
+        border-left: 3px solid #c40506;
+        background: #f8f9fa;
+        margin-bottom: 0.5rem;
+        border-radius: 4px;
+        font-size: 0.95rem;
+        color: #555;
+        transition: all 0.3s ease;
+    }
+
+    .completed-projects-list li:hover {
+        background: #e9ecef;
+        border-left-width: 5px;
+    }
+
+    .modal-body-custom .col-md-5 {
+        height: 85vh;
+        overflow: hidden;
+    }
+
+    .modal-body-custom .col-md-7 {
+        height: 85vh;
+        overflow-y: auto;
+    }
+
     @media (max-width: 768px) {
+        .modal-body-custom .col-md-5 {
+            overflow: auto;
+        }
+
+        .modal-body-custom .col-md-7 {
+            overflow-y: hidden;
+        }
+
         .card-col {
             flex: 0 0 280px;
             min-width: 260px;
@@ -146,6 +292,27 @@
 
         .scrollable-cards-container {
             padding: 1.5rem 1rem;
+        }
+
+        .modal-left-image {
+            min-height: 400px;
+        }
+
+        .modal-right-content {
+            padding: 1.5rem;
+        }
+
+        .modal-member-name {
+            font-size: 1.5rem;
+        }
+
+        .portfolio-card {
+            flex: 0 0 160px;
+            min-width: 160px;
+        }
+
+        .portfolio-card img {
+            height: 220px;
         }
     }
 
@@ -198,13 +365,17 @@
 
                 @foreach ($team as $data)
                     <div class="card-col">
-                        <div class="team-card">
-                            <img src="{{ $data['image'] }}" alt="{{ $data['nama'] }}">
+                        <div class="team-card" data-card-id="{{ $data['id'] }}">
+                            <div class="team-card-image-wrapper">
+                                <img src="{{ $data['image'] }}" alt="{{ $data['nama'] }}">
+                            </div>
                             <div class="card-overlay">
                                 <h5 class="border-bottom">{{ $data['nama'] }}</h5>
                                 <p>{{ $data['pengenalan_singkat'] }}</p>
-                                <a href="#" class="btn-read-more">Read More <i
-                                        class="fas fa-arrow-right ms-1"></i></a>
+                                <a href="#" class="btn-read-more" data-bs-toggle="modal"
+                                    data-bs-target="#teamModal{{ $data['id'] }}">
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -214,6 +385,65 @@
         </div>
     </div>
 </div>
+
+<!-- Modals -->
+@foreach ($team as $data)
+    <div class="modal fade" id="teamModal{{ $data['id'] }}" tabindex="-1"
+        aria-labelledby="teamModalLabel{{ $data['id'] }}" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-xl-custom modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h3 class="modal-title" id="teamModalLabel{{ $data['id'] }}">Profile</h3>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body modal-body-custom">
+                    <div class="row g-0">
+                        <div class="col-md-5">
+                            <img src="{{ $data['image'] }}" alt="{{ $data['nama'] }}" class="modal-left-image w-100">
+                        </div>
+
+                        <div class="col-md-7">
+                            <div class="modal-right-content">
+                                <h2 class="modal-member-name">{{ $data['nama'] }}</h2>
+
+                                <div class="modal-description">
+                                    <p>{{ $data['deskripsi_lengkap'] ?? $data['pengenalan_singkat'] }}</p>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="portfolio-scroll-container">
+                                        @if (isset($data['portfolio']) && count($data['portfolio']) > 0)
+                                            @foreach ($data['portfolio'] as $portfolio)
+                                                <div class="portfolio-card">
+                                                    <img src="{{ $portfolio['poster'] }}"
+                                                        alt="{{ $portfolio['judul'] }}">
+                                                    <div class="portfolio-card-title">{{ $portfolio['judul'] }}</div>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <p class="text-muted">Belum ada portfolio tersedia.</p>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div>
+                                    @if (isset($data['proyek_selesai']) && count($data['proyek_selesai']) > 0)
+                                        <p class="completed-projects-list">
+                                            {{ implode(', ', $data['proyek_selesai']) }}
+                                        </p>
+                                    @else
+                                        <p class="text-muted">Belum ada proyek yang tercatat.</p>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -232,8 +462,26 @@
         }
 
         updateIcon();
-
         collapseElement.addEventListener('show.bs.collapse', updateIcon);
         collapseElement.addEventListener('hide.bs.collapse', updateIcon);
+
+        const teamCards = document.querySelectorAll('.team-card');
+        const modals = document.querySelectorAll('.modal');
+
+        modals.forEach(function(modal) {
+            modal.addEventListener('show.bs.modal', function() {
+                teamCards.forEach(function(card) {
+                    card.classList.add('modal-open');
+                });
+            });
+
+            modal.addEventListener('hidden.bs.modal', function() {
+                setTimeout(function() {
+                    teamCards.forEach(function(card) {
+                        card.classList.remove('modal-open');
+                    });
+                }, 150);
+            });
+        });
     });
 </script>
