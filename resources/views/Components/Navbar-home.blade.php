@@ -1,8 +1,6 @@
 <style>
     .navbar-title-text {
         font-size: 1.1rem;
-        color: white;
-
     }
 
     .nav-link {
@@ -10,17 +8,15 @@
         font-size: 0.95rem;
         text-transform: uppercase;
         padding-left: 0.5rem;
-        color: #dfdfdf;
         padding-right: 0.5rem;
     }
 
     .navbar-nav .nav-link:hover {
-        color: #ffffff !important;
+        color: #ee0000 !important;
     }
 
     .navbar-nav .nav-link.active {
-        color: #ffffff !important;
-        font-weight: 800;
+        color: #ee0000 !important;
     }
 
     .navbar-toggler i {
@@ -53,34 +49,21 @@
         .navbar-title-text {
             font-size: 0.8rem;
         }
-
-        .nav-link {
-            color: #000
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: #ee0000 !important;
-        }
-
-        .navbar-nav .nav-link.active {
-            color: #ee0000 !important;
-        }
     }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light px-lg-4" style="background-color: #ee0000;" id="mainNavbar">
+<nav class="navbar navbar-expand-lg navbar-light px-lg-4 bg-light" id="mainNavbar">
     <div class="container-fluid">
         <a class="navbar-brand d-flex align-items-center gap-2" href="/">
             <img src="/img/logo-aci.png" alt="logo-aci" width="50" height="50"
                 class="d-inline-block align-text-top me-2"
-                style="object-position: center; object-fit: contain; aspect-ratio: 1/1; filter: brightness(0) invert(1)">
+                style="object-position: center; object-fit: contain; aspect-ratio: 1/1;">
             <span class="text-uppercase fw-bold navbar-title-text">ASOSIASI CASTING INDONESIA</span>
         </a>
 
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="offcanvas"
-            style="border:1px solid white; outline: none;" data-bs-target="#offcanvasNavbar"
-            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-            <i class="fa-solid fa-bars text-white"></i>
+            data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <i class="fa-solid fa-bars"></i>
         </button>
 
         <div class="collapse navbar-collapse justify-content-end" id="navbarNav">

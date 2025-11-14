@@ -38,7 +38,7 @@
 </head>
 
 <body class="antialiased">
-    <x-navbar />
+    <x-navbar-home />
     {{ $slot }}
     <x-footer />
 
